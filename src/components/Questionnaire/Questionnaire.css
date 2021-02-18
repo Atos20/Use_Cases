@@ -1,5 +1,36 @@
+.container{
+  display: flex;
+  flex-direction: row;
+}
+
+.left{
+  display: flex;
+  flex-direction: column;
+  background-color: antiquewhite;
+  width: 50vw;
+}
+
+.display-section{
+  background-color: rgb(90, 160, 160);
+  width: 50vw;
+}
 .questionnaire{
   display: flex;
   flex-direction: column;
   margin: 2%;
+  width: 50%
+}
+
+.sec-1{
+  background-color: rgb(148, 148, 221);
+}
+
+.sec-2{
+  background-color: rgb(151, 221, 194);
+}
+
+.rigth{
+  width: 50vw;
+  height: 50vh;
+  background-color: burlywood;
 }
