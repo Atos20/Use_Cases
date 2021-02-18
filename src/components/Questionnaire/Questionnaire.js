@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Formik, Field, Form } from 'formik'
 import './Questionnaire.css'
 
@@ -6,14 +6,17 @@ const Questionnaire = ({questions}) => {
   const [data, setData] = useState({})
   const [index, setIndex] = useState(0)
   let currentQuestion = questions[index]
+  const inputRef = useRef();
 
   const goUp= () => {
+    inputRef.current.focus();
     if(index <= (questions.length -2) ) {
       setIndex(index + 1)
     }
   }
 
   const goDown= () => {
+    inputRef.current.focus();
     if(index > 0) {
       setIndex(index - 1)
     }
@@ -21,31 +24,37 @@ const Questionnaire = ({questions}) => {
 
   return (
     <div>
-    <h1>Use Case</h1>
-    <div className="info">
-      <h2 className="description">{currentQuestion.category}</h2>
-      <p className="text">{currentQuestion.description}</p>
-    </div>
-    <div className="controls" >
-      <button className="back"  onClick={() => goDown()}>back</button>
-      <button className="next"  onClick={() => goUp()}>next</button>
-    </div>
-    <Formik
-      initialValues={{ [currentQuestion.category]: ''}}
-      onSubmit={(values, actions) => {
-        setData(values)
-          actions.resetForm()
-          actions.setSubmitting(false);
-      }}
-    >
-      {({ values })=> (
+
+      <h1>Use Case</h1>
+      <div className="info">
+        <h2 className="description">{currentQuestion.category}</h2>
+        <p className="text">{currentQuestion.description}</p>
+      </div>
+      <div className="controls" >
+        <button className="back"  onClick={() => goDown()}>back</button>
+        <button className="next"  onClick={() => goUp()}>next</button>
+      </div>
+
+      <Formik
+        initialValues={{ [currentQuestion.category]: ''}}
+        onSubmit={(values, actions) => {
+          setData(values)
+            actions.resetForm()
+            actions.setSubmitting(false);
+        }}
+      >
+
+        {({ values, handleChange, handleBlur })=> (
         <div className="questionnaire">
           <Form className="questionnaire" >
-            <Field 
+          <input
+              onChange={handleChange}
+             onBlur={handleBlur}
               placeholder={currentQuestion.category}
               name={currentQuestion.category}
-              type={currentQuestion.category}
+              type="text"
               value={values.target}
+              ref={inputRef}
             />
           
             <pre>
