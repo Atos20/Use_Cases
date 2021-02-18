@@ -10,6 +10,7 @@ const Questionnaire = ({questions}) => {
 
   const goUp= () => {
     inputRef.current.focus();
+    inputRef.current.value = ""
     if(index <= (questions.length -2) ) {
       setIndex(index + 1)
     }
@@ -17,6 +18,7 @@ const Questionnaire = ({questions}) => {
 
   const goDown= () => {
     inputRef.current.focus();
+    inputRef.current.value = ""
     if(index > 0) {
       setIndex(index - 1)
     }
