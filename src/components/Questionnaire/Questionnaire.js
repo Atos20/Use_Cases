@@ -2,51 +2,63 @@ import React, { useState } from 'react'
 import { Formik, Field, Form } from 'formik'
 import './Questionnaire.css'
 
-const Questionnaire = () => {
-  const [data, setData] = useState('')
+const Questionnaire = ({questions}) => {
+  const [data, setData] = useState({})
+  const [index, setIndex] = useState(0)
+  let currentQuestion = questions[index]
 
+  const goUp= () => {
+    if(index <= (questions.length -2) ) {
+      setIndex(index + 1)
+    }
+  }
 
+  const goDown= () => {
+    if(index > 0) {
+      setIndex(index - 1)
+    }
+  }
 
   return (
     <div>
     <h1>Use Case</h1>
+    <div className="info">
+      <h2 className="description">{currentQuestion.category}</h2>
+      <p className="text">{currentQuestion.description}</p>
+    </div>
+    <div className="controls" >
+      <button className="back"  onClick={() => goDown()}>back</button>
+      <button className="next"  onClick={() => goUp()}>next</button>
+    </div>
     <Formik
-      initialValues={{ entry: '' }}
+      initialValues={{ [currentQuestion.category]: ''}}
       onSubmit={(values, actions) => {
-        console.log(values)
-        setData(values.entry)
-          console.log(actions)
+        setData(values)
           actions.resetForm()
           actions.setSubmitting(false);
       }}
     >
-      {props => (
-        <Form >
-          <Field 
-            placeholder='text'
-            name='entry'
-            type='input'
-            value={props.values.entry}
-          />
-        
-          {/* <input
-            placeholder
-            type="text"
-            onChange={props.handleChange}
-            onBlur={props.handleBlur}
-            value={props.values.entry}
-            name="entry"
-          /> */}
-          <pre>
-            {JSON.stringify(props.values)}
-          </pre>
-          {data && <h1 className="display">{data}</h1>}
-          {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-          <div className="btn">
+      {({ values })=> (
+        <div className="questionnaire">
+          <Form className="questionnaire" >
+            <Field 
+              placeholder={currentQuestion.category}
+              name={currentQuestion.category}
+              type={currentQuestion.category}
+              value={values.target}
+            />
+          
+            <pre>
+              {JSON.stringify(values)}
+            </pre>
 
-            <button type="submit">Submit</button>
-          </div>
-        </Form>
+
+            <div className="btn">
+
+              <button type="submit">Submit</button>
+            </div>
+          </Form>
+        </div>
       )}
     </Formik>
 
