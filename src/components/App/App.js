@@ -1,10 +1,10 @@
 import './App.css';
-import { Form } from '../Form';
+import  UseCase  from '../UseCase';
 
 function App() {
   return (
     <div className="App">
-  hello
+      <UseCase/>
     </div>
   );
 }

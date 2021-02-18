@@ -1,1 +1,1 @@
-export { default } from './UserCase'
+export { default } from './UseCase'
