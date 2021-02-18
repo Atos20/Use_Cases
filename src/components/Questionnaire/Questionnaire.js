@@ -1,41 +1,54 @@
 import React, { useState } from 'react'
-import { Formik } from 'formik'
+import { Formik, Field, Form } from 'formik'
 import './Questionnaire.css'
 
 const Questionnaire = () => {
   const [data, setData] = useState('')
 
 
+
   return (
     <div>
-     <h1>Use Case</h1>
-     <Formik
-       initialValues={{ entry: '' }}
-       onSubmit={(values, actions) => {
-         console.log(values)
-         setData(values.entry)
+    <h1>Use Case</h1>
+    <Formik
+      initialValues={{ entry: '' }}
+      onSubmit={(values, actions) => {
+        console.log(values)
+        setData(values.entry)
           console.log(actions)
           actions.resetForm()
           actions.setSubmitting(false);
-       }}
-     >
-       {props => (
-         <form onSubmit={props.handleSubmit}>
-           <input
-             type="text"
-             onChange={props.handleChange}
-             onBlur={props.handleBlur}
-             value={props.values.entry}
-             name="entry"
-           />
-           <pre>
-             {JSON.stringify(props.values)}
-           </pre>
-           {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-           <button type="submit">Submit</button>
-         </form>
-       )}
-     </Formik>
+      }}
+    >
+      {props => (
+        <Form >
+          <Field 
+            placeholder='text'
+            name='entry'
+            type='input'
+            value={props.values.entry}
+          />
+        
+          {/* <input
+            placeholder
+            type="text"
+            onChange={props.handleChange}
+            onBlur={props.handleBlur}
+            value={props.values.entry}
+            name="entry"
+          /> */}
+          <pre>
+            {JSON.stringify(props.values)}
+          </pre>
+          {data && <h1 className="display">{data}</h1>}
+          {props.errors.name && <div id="feedback">{props.errors.name}</div>}
+          <div className="btn">
+
+            <button type="submit">Submit</button>
+          </div>
+        </Form>
+      )}
+    </Formik>
 
     
    </div>
