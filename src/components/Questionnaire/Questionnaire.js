@@ -51,7 +51,7 @@ const Questionnaire = ({questions}) => {
           <Form className="questionnaire" >
           <input
               onChange={handleChange}
-             onBlur={handleBlur}
+              onBlur={handleBlur}
               placeholder={currentQuestion.category}
               name={currentQuestion.category}
               type="text"
@@ -63,14 +63,13 @@ const Questionnaire = ({questions}) => {
               {JSON.stringify(values)}
             </pre>
 
-
             <div className="btn">
-
-              <button type="submit">Submit</button>
+              {index === (questions.length -1) && <button type="submit">Submit</button>}
             </div>
           </Form>
         </div>
       )}
+
     </Formik>
 
     
