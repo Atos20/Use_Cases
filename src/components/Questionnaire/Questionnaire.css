@@ -34,7 +34,7 @@
 
 .rigth{
   width: 400px;
-  height: 400px;
+  height: 511px;
   background-color: burlywood;
   position: absolute;
     top: 0%; left: 100%; right: -50%
@@ -43,4 +43,41 @@
 .bold{
   font-weight: 600;
   text-decoration: underline;
+}
+
+.controls{
+  display:flex;
+  flex-direction: column;
+  height: 150px;
+  margin:5%;
+  padding: 2%;
+}
+
+.cases{
+  background-color:coral;
+  width: 800px;
+  height: 50vh;
+  position: absolute;
+  top: 80%; left: 0%; right: 0%;
+  display: grid;
+  grid-template-columns: repeat(5, 20%);
+  grid-template-rows: repeat(2, 50%);
+  grid-gap: 2px;
+
+}
+
+.case{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  background-color: cornsilk;
+  height: 80%;
+  padding: 5%;
+}
+
+.small{
+  font-size: .8em;
+  margin: 0%;
+  padding: 0%;
 }
