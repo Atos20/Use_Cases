@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+[![Contributors][contributors-shield]](https://https://github.com/Atos20/Use_Cases/graphs/contributors)
+[![Forks][forks-shield]](https://github.com/Atos20/Use_Cases/network/members)
+[![Issues][issues-shield]](https://github.com/Use_Cases/issues)
+[![Starred][stars-shield]](https://github.com/Use_Cases/issues)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Contributors
+  - [Orlando Murcio](https://www.github.com/atos20)
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+**Use_Cases**  isa feauture that allow the user to fill out a form and previeew their input as soon as they insert the information. The Form is divided into five sections. 
+## Task
 
-### `yarn start`
+The main goal of this project was to create a form component tha  can generate a preview submission using static content and dynamic content from the current form.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Technologies used:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  * React
+  * Formik
+  * Material UI
+  * CSS
+  * GitHub
+  * local storage
+  * Yup
 
-### `yarn test`
+## Challenges
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  * State manipulation in the controlled form
+  * File organizations
+  * Questionnaire component design
+  * Use of Formik
+  * Implemetation of some Material UI components
+  * Display of Data
 
-### `yarn build`
+## Wins
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  * File organizations
+  * Saving data to local storage
+  * Grid display
+  * Text previeew combining static and dynamic content
+  
+## Future Goals
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  * PDF saving 
+  * User authentication
+  * Use of a data base to save data
+## In Action
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Take 1
 
-### `yarn eject`
+*Navigating the Questionnaire*
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- The user can use the `next` and `back` to navigate the questionnaire.
+- After completion the user can submit the butto or jump to the begining of the form to edit their answers.
+- Answers should persist to make it easier for the user to edit
+- A preview of the dynamic and static content should display and persist on the right side of the screen.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+ <p align="center">
+  <img src="https://media.giphy.com/media/C6NtNJfzFCM0QiY6fe/giphy.gif" alt="" height=100% width=300/>  
+ </p>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Set up
 
-## Learn More
+  - Clone the repository to your computer `git clone <URL>`
+  - Run in your terminal the following command: `git clone [remote-address] [what you want to name the repo]`
+- `cd` into the newly cloned repository with the following command `cd <repo-name>`
+- Run `npm install` to install all required dependencies
+- By running `npm start` the application should run on `http://localhost:3000/` or if you already have something running on port `3000` just type `Y` when asked to run project on port `3001`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Contribute
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Create a new branch with `git checkout -b <new branch name>`
+- Open your text editor and add or remove functionalities to the site.
+- `git add` and `git commit -m "<your commit meessage>"` to save the changes to your local repository
+- `git push` your changes
+- Make use a PR template whe creating a new pull requests
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Project Managers
+- Albert
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+[contributors-shield]: https://img.shields.io/github/contributors/Atos20/communiK.svg?style=flat-square 
+[contributors-url]: https://github.com/Atos20/Use_Cases/graphs/contributors
 
-### Making a Progressive Web App
+[forks-shield]: https://img.shields.io/github/forks/Atos20/communiK.svg?style=flat-square
+[forks-url]: https://github.com/Atos20/Use_Cases/network/members
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+[stars-shield]: https://img.shields.io/github/stars/Atos20/communiK.svg?style=flat-square
+[stars-url]: https://github.com/Atos20/Use_Cases/stargazers
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[issues-shield]: https://img.shields.io/github/issues/Atos20/Use_Cases.svg?style=flat-square
+[issues-url]: https://github.com/Atos20/Use_Cases/issues
