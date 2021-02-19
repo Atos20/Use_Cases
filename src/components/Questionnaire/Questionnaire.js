@@ -6,7 +6,7 @@ import Cases from '../Cases'
 import './Questionnaire.css'
 
 
-const Questionnaire = ({questions}) => {
+const Questionnaire = ({ questions }) => {
   const [cases, setCases] = useState([]);
   const [index, setIndex] = useState(0);
   let currentQuestion = questions[index];
@@ -15,14 +15,14 @@ const Questionnaire = ({questions}) => {
   useEffect(() => {
     inputRef.current.focus();
     setCases(JSON.parse(localStorage.getItem('data'))|| [])
-  }, [])
+  }, []);
 
   const goUp= (error, values) => {
     if(error[currentQuestion.category] || !values['Target']){
       return false
     }
     inputRef.current.focus();
-    inputRef.current.value = ""
+    inputRef.current.value = ''
     if(index <= (questions.length -2) ) {
       setIndex(index + 1)
     }
@@ -30,10 +30,28 @@ const Questionnaire = ({questions}) => {
 
   const goDown= () => {
     inputRef.current.focus();
-    inputRef.current.value = ""
+    inputRef.current.value = ''
     if(index > 0) {
       setIndex(index - 1)
     }
+  }
+
+  const injectCases = () => {
+      
+    return cases.map((entry, i) => {
+      return (
+          <article className="case" key={i}>
+                <h4 className="bold"> Product case {i +1}</h4>
+                <p>
+                <span className="small"> [ {entry['Target']} ] </span> at
+                <span className="small"> [ {entry['Company type']} ] </span>  use
+                <span className="small"> [ {entry['Product name']} ]</span> in order to
+                <span className="small"> [ {entry['Action']} ]</span>
+                <span className="small"> [ {entry['Task']} ] </span>
+                </p>
+          </article>
+      )
+    })
   }
 
   return (
@@ -41,6 +59,11 @@ const Questionnaire = ({questions}) => {
 
       <h1 className='case-title'>Theorem</h1>
       <h1 className='case-title'>Use Case</h1>
+
+      <div className="cases">
+      {injectCases()}
+      </div>
+
       <div className="container">
 
           <div className="left">
@@ -64,7 +87,7 @@ const Questionnaire = ({questions}) => {
                     setSubmitting(true);
                     setCases([...cases, {... values }])
                     localStorage.setItem('data', JSON.stringify([...cases, values]));
-                    console.log(values)
+                    
                     setSubmitting(false);
                     resetForm()
                   }}
@@ -169,13 +192,8 @@ const Questionnaire = ({questions}) => {
               </Formik>
             </div>
           </div>
-          
-
-          <div className="cases">
-            <Cases cases={cases}/>
-          </div>
-
       </div>
+
   
    </div>
   )
