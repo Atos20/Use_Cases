@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import Cases from '../Cases'
 // import * as yup from 'yup';
 import './Questionnaire.css'
-
+import { v4 as uuidv4 } from 'uuid';
 
 const Questionnaire = ({ questions }) => {
   const [cases, setCases] = useState([]);
@@ -16,6 +16,11 @@ const Questionnaire = ({ questions }) => {
     inputRef.current.focus();
     setCases(JSON.parse(localStorage.getItem('data'))|| [])
   }, []);
+
+  useEffect(() => {
+    inputRef.current.focus();
+    localStorage.setItem('data', JSON.stringify(cases));
+  }, [cases]);
 
   const goUp= (error, values) => {
     if(error[currentQuestion.category] || !values['Target']){
@@ -36,12 +41,21 @@ const Questionnaire = ({ questions }) => {
     }
   }
 
+  const removeCase = (e) => {
+    console.log(e.target.id)
+    setCases(cases.filter(entry => entry.id !== e.target.id));
+  }
+
   const injectCases = () => {
       
     return cases.map((entry, i) => {
       return (
           <article className="case" key={i}>
-                <h4 className="bold"> Product case {i +1}</h4>
+                <button 
+                  id={entry.id}
+                  onClick={(e)=> removeCase(e)}
+                  className="remove">X</button>
+                <h4 className="bold"> Product case {i + 1}</h4>
                 <p>
                 <span className="small"> [ {entry['Target']} ] </span> at
                 <span className="small"> [ {entry['Company type']} ] </span>  use
@@ -82,26 +96,19 @@ const Questionnaire = ({ questions }) => {
             </div>
 
                 <Formik
-                  initialValues={{ [currentQuestion.category]: ''}}
+                  initialValues={{ [currentQuestion.category]: '', id: ''}}
                   onSubmit={(values, { setSubmitting, resetForm }) => {
+                    values.id = uuidv4()
                     setSubmitting(true);
                     setCases([...cases, {... values }])
-                    localStorage.setItem('data', JSON.stringify([...cases, values]));
+                    localStorage.setItem('data', JSON.stringify([...cases, values ]));
                     
                     setSubmitting(false);
                     resetForm()
                   }}
 
-                  // validationSchema={ yup.object({
-                  //   [currentQuestion.category] : yup.string()
-                  //     .min(1, 'more than one character please')
-                  //     .max(100, 'no more than 100 characters')
-                  //     .required()
-                  // })}
-
                   validate={values  => {
                     const errors = {}
-
                       if(!values[currentQuestion.category] || !values['Target']) {
                         errors[currentQuestion.category] = 'incorrect entry'
                       }
@@ -139,13 +146,13 @@ const Questionnaire = ({ questions }) => {
                           onClick={() => goUp(errors, values)}
                           >next</Button>}
 
-                        <Button
+                        {index === (questions.length -1) && <Button
                           className='control'
                           className='next'
                           variant='contained'
                           color='primary'  
                           onClick={() => setIndex(0)}
-                          >start again</Button>
+                          >start again</Button>}
                       </div>
 
                       <pre>{JSON.stringify(errors, null, 2)}</pre>
