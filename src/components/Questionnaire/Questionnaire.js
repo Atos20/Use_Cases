@@ -1,22 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Formik, Field, Form } from 'formik'
 import { Button } from '@material-ui/core';
-import * as yup from 'yup';
+import Cases from '../Cases'
+// import * as yup from 'yup';
 import './Questionnaire.css'
 
 
 const Questionnaire = ({questions}) => {
-  const [data, setData] = useState(null);
+  const [cases, setCases] = useState([]);
   const [index, setIndex] = useState(0);
   let currentQuestion = questions[index];
   const inputRef = useRef('');
   
   useEffect(() => {
-    setData(JSON.parse(localStorage.getItem('data'))|| null)
+    inputRef.current.focus();
+    setCases(JSON.parse(localStorage.getItem('data'))|| [])
   }, [])
 
   const goUp= (error, values) => {
-    console.log(values)
     if(error[currentQuestion.category] || !values['Target']){
       return false
     }
@@ -27,8 +28,7 @@ const Questionnaire = ({questions}) => {
     }
   }
 
-  const goDown= (error) => {
-    console.log(error)
+  const goDown= () => {
     inputRef.current.focus();
     inputRef.current.value = ""
     if(index > 0) {
@@ -39,7 +39,8 @@ const Questionnaire = ({questions}) => {
   return (
     <div className='parent'>
 
-      <h1 className='case'>Use Case</h1>
+      <h1 className='case-title'>Theorem</h1>
+      <h1 className='case-title'>Use Case</h1>
       <div className="container">
 
           <div className="left">
@@ -59,13 +60,13 @@ const Questionnaire = ({questions}) => {
 
                 <Formik
                   initialValues={{ [currentQuestion.category]: ''}}
-                  onSubmit={(values, {setSubmitting, resetForm}) => {
+                  onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
-                    setData(values)
+                    setCases([...cases, {... values }])
+                    localStorage.setItem('data', JSON.stringify([...cases, values]));
+                    console.log(values)
                     setSubmitting(false);
                     resetForm()
-                    localStorage.setItem('data', JSON.stringify(values));
-                    console.log(values)
                   }}
 
                   // validationSchema={ yup.object({
@@ -77,15 +78,16 @@ const Questionnaire = ({questions}) => {
 
                   validate={values  => {
                     const errors = {}
-                    
+
                       if(!values[currentQuestion.category] || !values['Target']) {
                         errors[currentQuestion.category] = 'incorrect entry'
                       }
                       return errors
                   }}
+
                 >
 
-                  {( {errors, values, handleChange, handleBlur })=> (
+                  {( { errors, values, handleChange, handleBlur })=> (
                   <div className="questionnaire">
                     <Form className="questionnaire" >
                     <input
@@ -94,7 +96,7 @@ const Questionnaire = ({questions}) => {
                         placeholder={currentQuestion.category}
                         name={currentQuestion.category}
                         type="text"
-                        value={values.target}
+                        value={values[currentQuestion.category]}
                         ref={inputRef}
                       />
 
@@ -103,16 +105,24 @@ const Questionnaire = ({questions}) => {
                         <Button 
                           variant="contained" 
                           color="primary" 
-                          className="back"  
+                          className="control"  
                           onClick={() => goDown(errors, values)}
                           >back</Button>
 
-                        <Button
+                        { index !== (questions.length -1) && <Button
                           className="next" 
                           variant="contained" 
                           color="primary"  
                           onClick={() => goUp(errors, values)}
-                          >next</Button>
+                          >next</Button>}
+
+                        <Button
+                          className='control'
+                          className='next'
+                          variant='contained'
+                          color='primary'  
+                          onClick={() => setIndex(0)}
+                          >start again</Button>
                       </div>
 
                       <pre>{JSON.stringify(errors, null, 2)}</pre>
@@ -122,6 +132,7 @@ const Questionnaire = ({questions}) => {
                       <div className="btn">
                         {index === (questions.length -1) && 
                         <Button 
+                          
                           variant="contained" 
                           color="secondary" 
                           type="submit" 
@@ -157,6 +168,11 @@ const Questionnaire = ({questions}) => {
                 )}
               </Formik>
             </div>
+          </div>
+          
+
+          <div className="cases">
+            <Cases cases={cases}/>
           </div>
 
       </div>
