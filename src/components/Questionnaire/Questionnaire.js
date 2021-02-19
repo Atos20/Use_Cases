@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Formik, Field, Form } from 'formik'
 import { Button } from '@material-ui/core';
 import * as yup from 'yup';
@@ -6,11 +6,15 @@ import './Questionnaire.css'
 
 
 const Questionnaire = ({questions}) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [index, setIndex] = useState(0);
   let currentQuestion = questions[index];
   const inputRef = useRef('');
   
+  useEffect(() => {
+    setData(JSON.parse(localStorage.getItem('data'))|| null)
+  }, [])
+
   const goUp= (error, values) => {
     console.log(values)
     if(error[currentQuestion.category] || !values['Target']){
@@ -43,13 +47,13 @@ const Questionnaire = ({questions}) => {
             <div className="sec-1">
 
               <div className="info">
+                <h1 className="description">Input</h1>
                 <h2 className="description">{currentQuestion.category} Section</h2>
                 <p className="text">{currentQuestion.description}</p>
 
             </div>
 
             <div className="sec-2">
-
 
             </div>
 
@@ -60,12 +64,16 @@ const Questionnaire = ({questions}) => {
                     setData(values)
                     setSubmitting(false);
                     resetForm()
+                    localStorage.setItem('data', JSON.stringify(values));
                     console.log(values)
                   }}
 
                   // validationSchema={ yup.object({
-                  //   [currentQuestion.category]: yup.string().required()}
-                  // )}
+                  //   [currentQuestion.category] : yup.string()
+                  //     .min(1, 'more than one character please')
+                  //     .max(100, 'no more than 100 characters')
+                  //     .required()
+                  // })}
 
                   validate={values  => {
                     const errors = {}
@@ -91,26 +99,59 @@ const Questionnaire = ({questions}) => {
                       />
 
                       <div className="controls" >
-                        <Button variant="contained" color="primary" className="back"  onClick={() => goDown(errors, values)}>back</Button>
-                        <Button className="next" variant="contained" color="primary"  onClick={() => goUp(errors, values)}>next</Button>
+
+                        <Button 
+                          variant="contained" 
+                          color="primary" 
+                          className="back"  
+                          onClick={() => goDown(errors, values)}
+                          >back</Button>
+
+                        <Button
+                          className="next" 
+                          variant="contained" 
+                          color="primary"  
+                          onClick={() => goUp(errors, values)}
+                          >next</Button>
                       </div>
 
                       <pre>{JSON.stringify(errors, null, 2)}</pre>
+                      <p className="preview-text">{errors[currentQuestion.category]}</p>
 
 
                       <div className="btn">
-                        {index === (questions.length -1) && <Button variant="contained" color="secondary" type="submit">Submit</Button>}
+                        {index === (questions.length -1) && 
+                        <Button 
+                          variant="contained" 
+                          color="secondary" 
+                          type="submit" 
+                          >Submit</Button>}
                       </div>
 
                       <div className="rigth">
-                        <h1 className="display"> Preview </h1>
+                        <h1 className="display"> Output </h1>
                         <h3 className="your-answer">using formik.values</h3>
                         <p className="preview-text">{values[currentQuestion.category]}</p>
                         <h3 className="your-answer">using useRef</h3>
-                        <p className="preview-text">{inputRef.current.value}</p>
-                        <p className="preview-text">{inputRef.current.value}</p>
-                      </div>
+                        <p className="preview-title">{inputRef.current.value}</p>
 
+
+                        <div className="preview-section">
+                          
+                          <h3 className="your-answer">Preview</h3>
+
+                          <p className="preview-text">
+                            <span className="bold">Product case 1:</span>
+                            <br/>
+                            <span className="bold"> {values['Target'] || '[________]'} </span> at 
+                            <span className="bold"> {values['Company type'] || '[________]'} </span> use  
+                            <span className="bold"> {values['Product name'] || '[________]'} </span>in order to  
+                            <span className="bold"> {values['Action'] || '[________]'} </span>
+                            <span className="bold"> {values['Task'] || '[________]'} </span>
+
+                          </p>
+                        </div>
+                      </div>
                     </Form>
                   </div>
                 )}
