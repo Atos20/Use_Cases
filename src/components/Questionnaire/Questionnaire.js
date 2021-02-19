@@ -1,14 +1,21 @@
 import React, { useState, useRef } from 'react'
 import { Formik, Field, Form } from 'formik'
+import { Button } from '@material-ui/core';
+import * as yup from 'yup';
 import './Questionnaire.css'
 
-const Questionnaire = ({questions}) => {
-  const [data, setData] = useState({})
-  const [index, setIndex] = useState(0)
-  let currentQuestion = questions[index]
-  const inputRef = useRef();
 
-  const goUp= () => {
+const Questionnaire = ({questions}) => {
+  const [data, setData] = useState({});
+  const [index, setIndex] = useState(0);
+  let currentQuestion = questions[index];
+  const inputRef = useRef('');
+  
+  const goUp= (error) => {
+    console.log(error)
+    if(error[currentQuestion.category] || error['Target']){
+      return false
+    }
     inputRef.current.focus();
     inputRef.current.value = ""
     if(index <= (questions.length -2) ) {
@@ -16,7 +23,11 @@ const Questionnaire = ({questions}) => {
     }
   }
 
-  const goDown= () => {
+  const goDown= (error) => {
+    console.log(error)
+    // if(error[currentQuestion.category]){
+    //   return false
+    // }
     inputRef.current.focus();
     inputRef.current.value = ""
     if(index > 0) {
@@ -38,27 +49,37 @@ const Questionnaire = ({questions}) => {
                 <h2 className="description">{currentQuestion.category} Section</h2>
                 <p className="text">{currentQuestion.description}</p>
 
-              </div>
-
-              <div className="controls" >
-                <button className="back"  onClick={() => goDown()}>back</button>
-                <button className="next"  onClick={() => goUp()}>next</button>
-              </div>
-
             </div>
 
             <div className="sec-2">
 
+
+            </div>
+
                 <Formik
                   initialValues={{ [currentQuestion.category]: ''}}
-                  onSubmit={(values, actions) => {
+                  onSubmit={(values, {setSubmitting, resetForm}) => {
+                    setSubmitting(true);
                     setData(values)
-                      actions.resetForm()
-                      actions.setSubmitting(false);
+                    setSubmitting(false);
+                    resetForm()
+                    console.log(values)
+                  }}
+
+                  // validationSchema={ yup.object({
+                  //   [currentQuestion.category]: yup.string().required()}
+                  // )}
+
+                  validate={values  => {
+                    const errors = {}
+                      if(!values[currentQuestion.category]) {
+                        errors[currentQuestion.category] = 'incorrect entry'
+                      }
+                      return errors
                   }}
                 >
 
-                  {({ values, handleChange, handleBlur })=> (
+                  {( {errors, values, handleChange, handleBlur })=> (
                   <div className="questionnaire">
                     <Form className="questionnaire" >
                     <input
@@ -70,24 +91,32 @@ const Questionnaire = ({questions}) => {
                         value={values.target}
                         ref={inputRef}
                       />
-                    
-                      <pre>
-                        {JSON.stringify(values)}
-                      </pre>
+
+                      <div className="controls" >
+                        <Button variant="contained" color="primary" className="back"  onClick={() => goDown(errors)}>back</Button>
+                        <Button className="next" variant="contained" color="primary"  onClick={() => goUp(errors)}>next</Button>
+                      </div>
+
+                      <pre>{JSON.stringify(errors, null, 2)}</pre>
+
 
                       <div className="btn">
-                        {index === (questions.length -1) && <button type="submit">Submit</button>}
+                        {index === (questions.length -1) && <Button variant="contained" color="secondary" type="submit">Submit</Button>}
                       </div>
+
+                      <div className="rigth">
+                        <h1 className="display"> Preview </h1>
+                        <h3 className="your-answer">using formik.values</h3>
+                        <p className="preview-text">{values[currentQuestion.category]}</p>
+                        <h3 className="your-answer">using useRef</h3>
+                        <p className="preview-text">{inputRef.current.value}</p>
+                      </div>
+
                     </Form>
                   </div>
                 )}
-
               </Formik>
             </div>
-          
-          </div>
-
-          <div className="rigth">
           </div>
 
       </div>
@@ -97,26 +126,3 @@ const Questionnaire = ({questions}) => {
 }
 
 export default Questionnaire;
-//state = useState({})
-/*
-data requires 5 entries???
-data = {
-  1   'target '    : 'user input', => select drop down
-  2   'company type'   : 'user input', => select drop down
-  3   'product name'     : 'user input', =>  user input 
-  4   'action or event '    : 'user input', => user input
-  5   'task to solve'    :'user input' => user input 
-}
-*/
-
-
-  // Use Formik
-  //hook to get the information //check docs
-
-  //
-  //  create a controlled form 
-  // string validation => making sure it is not empty
-  // gather the data in the state
-
-
-  // witht state SUbmit Fn
