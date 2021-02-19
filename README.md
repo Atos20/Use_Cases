@@ -8,10 +8,10 @@
 
 ## Overview
 
-**Use_Cases**  isa feauture that allow the user to fill out a form and previeew their input as soon as they insert the information. The Form is divided into five sections. 
+**Use_Cases**  is a feature that allows the user to fill out a form and preview their input as soon as they insert the information. The Form is divided into five quesitons. 
 ## Task
 
-The main goal of this project was to create a form component tha  can generate a preview submission using static content and dynamic content from the current form.
+The main goal of this project was to create a form component that  can generate a preview submission using static content and dynamic content from the current form.
 
 #### Technologies used:
 
@@ -29,21 +29,21 @@ The main goal of this project was to create a form component tha  can generate a
   * File organizations
   * Questionnaire component design
   * Use of Formik
-  * Implemetation of some Material UI components
-  * Display of Data
+  * Implementation of UI components
+  * Display of data
 
 ## Wins
 
-  * File organizations
+  * File organization
   * Saving data to local storage
   * Grid display
-  * Text previeew combining static and dynamic content
+  * Text preview combining static and dynamic content
   
 ## Future Goals
 
   * PDF saving 
   * User authentication
-  * Use of a data base to save data
+  * Use of a data base to save files
 ## In Action
 
 #### Take 1
@@ -51,9 +51,10 @@ The main goal of this project was to create a form component tha  can generate a
 *Navigating the Questionnaire*
 
 - The user can use the `next` and `back` to navigate the questionnaire.
-- After completion the user can submit the butto or jump to the begining of the form to edit their answers.
-- Answers should persist to make it easier for the user to edit
 - A preview of the dynamic and static content should display and persist on the right side of the screen.
+- After completion, the user can submit the newly create content by clicking on `submit` button or jump to the begining of the form to answer a new set of questions `start again`
+- The new content displays at the bottom of the page on the `grid section`
+- Answers should persist to make it easier for the user to edit
 
 
  <p align="center">
