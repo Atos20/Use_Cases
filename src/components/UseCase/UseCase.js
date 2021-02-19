@@ -1,8 +1,8 @@
-import React from 'react'
-import Questionnaire from '../Questionnaire'
-import './UseCase.css'
+import React, { useEffect, useState }from 'react';
+import Questionnaire from '../Questionnaire';
+import './UseCase.css';
 
-const UserCase = () => {
+const UseCase = () => {
 
   const questions = [
     {
@@ -27,6 +27,7 @@ const UserCase = () => {
     }
   ]
 
+
   return (
 
     <div className="UseCase">
@@ -35,4 +36,4 @@ const UserCase = () => {
   )
 }
 
-export default UserCase;
+export default UseCase;
