@@ -11,9 +11,9 @@ const Questionnaire = ({questions}) => {
   let currentQuestion = questions[index];
   const inputRef = useRef('');
   
-  const goUp= (error) => {
-    console.log(error)
-    if(error[currentQuestion.category] || error['Target']){
+  const goUp= (error, values) => {
+    console.log(values)
+    if(error[currentQuestion.category] || !values['Target']){
       return false
     }
     inputRef.current.focus();
@@ -25,9 +25,6 @@ const Questionnaire = ({questions}) => {
 
   const goDown= (error) => {
     console.log(error)
-    // if(error[currentQuestion.category]){
-    //   return false
-    // }
     inputRef.current.focus();
     inputRef.current.value = ""
     if(index > 0) {
@@ -36,9 +33,9 @@ const Questionnaire = ({questions}) => {
   }
 
   return (
-    <>
+    <div className='parent'>
 
-      <h1>Use Case</h1>
+      <h1 className='case'>Use Case</h1>
       <div className="container">
 
           <div className="left">
@@ -72,7 +69,8 @@ const Questionnaire = ({questions}) => {
 
                   validate={values  => {
                     const errors = {}
-                      if(!values[currentQuestion.category]) {
+                    
+                      if(!values[currentQuestion.category] || !values['Target']) {
                         errors[currentQuestion.category] = 'incorrect entry'
                       }
                       return errors
@@ -93,8 +91,8 @@ const Questionnaire = ({questions}) => {
                       />
 
                       <div className="controls" >
-                        <Button variant="contained" color="primary" className="back"  onClick={() => goDown(errors)}>back</Button>
-                        <Button className="next" variant="contained" color="primary"  onClick={() => goUp(errors)}>next</Button>
+                        <Button variant="contained" color="primary" className="back"  onClick={() => goDown(errors, values)}>back</Button>
+                        <Button className="next" variant="contained" color="primary"  onClick={() => goUp(errors, values)}>next</Button>
                       </div>
 
                       <pre>{JSON.stringify(errors, null, 2)}</pre>
@@ -110,6 +108,7 @@ const Questionnaire = ({questions}) => {
                         <p className="preview-text">{values[currentQuestion.category]}</p>
                         <h3 className="your-answer">using useRef</h3>
                         <p className="preview-text">{inputRef.current.value}</p>
+                        <p className="preview-text">{inputRef.current.value}</p>
                       </div>
 
                     </Form>
@@ -121,7 +120,7 @@ const Questionnaire = ({questions}) => {
 
       </div>
   
-   </>
+   </div>
   )
 }
 
